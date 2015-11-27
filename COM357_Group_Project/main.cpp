@@ -1,5 +1,7 @@
 #include "invoice.h"
 
+vector<invoice*> invoice::invoices;
+
 void displayMenu();
 float invoice::grand_total_price = 0;
 
@@ -9,7 +11,6 @@ void main() {
 
 void displayMenu() {
 	char choice;
-	invoice *recentInvoice = new invoice("Placeholder", 0000, 00.00, 0000, 1, "Placeholder", "01/01/2000");
 	do {
 		cout << "--------------------------------------" << endl;
 		cout << "Choices are:" << endl
@@ -22,12 +23,13 @@ void displayMenu() {
 
 		switch (choice) {
 		case 'A':
-		case 'a': 
-			recentInvoice = new invoice();
+		case 'a': {
+			invoice *newInvoice = new invoice();
+		}
 			break;
 		case 'D':
 		case 'd': 
-			recentInvoice->display();
+			invoice::display();
 			break;
 		case 'T':
 		case 't': 

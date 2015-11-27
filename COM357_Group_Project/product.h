@@ -6,7 +6,7 @@ using namespace std;
 class product {
 
 protected:
-	string product_name;//char product_name[30];
+	string product_name;
 	int product_code;
 	float price;
 
