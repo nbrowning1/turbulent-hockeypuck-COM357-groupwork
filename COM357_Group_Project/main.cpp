@@ -1,4 +1,5 @@
 #include "invoice.h"
+#include <conio.h>
 
 vector<invoice*> invoice::invoices;
 
@@ -9,8 +10,15 @@ void main() {
 	displayMenu();
 }
 
+void resetMenu() {
+	cout << "- Press enter to return to menu ...";
+	_getche();
+	system("cls");
+}
+
 void displayMenu() {
 	char choice;
+	bool exit = false;
 	do {
 		cout << "--------------------------------------" << endl;
 		cout << "Choices are:" << endl
@@ -25,6 +33,7 @@ void displayMenu() {
 		case 'A':
 		case 'a': {
 			invoice *newInvoice = new invoice();
+			cout << endl << "New invoice added";
 		}
 			break;
 		case 'D':
@@ -37,9 +46,14 @@ void displayMenu() {
 			break;
 		case 'Q':
 		case 'q':
+			exit = true;
 			break;
 		default: 
 			cout << endl << "Choice out of bounds";
 		}
-	} while (choice != 'Q' || choice != 'q');
+
+		if (!exit) {
+			resetMenu();
+		}
+	} while (!exit);
 }

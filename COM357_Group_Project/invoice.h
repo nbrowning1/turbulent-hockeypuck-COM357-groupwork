@@ -4,8 +4,8 @@
 #include "sales.h"
 
 class invoice :private sales {
-	string seller_name;
-	string invoice_date;
+	char seller_name[20];
+	char invoice_date[10];
 	static float grand_total_price;
 
 	static vector<invoice*> invoices;
@@ -47,10 +47,12 @@ public:
 		invoices.push_back(this);
 	}
 
-	invoice(string _product_name, int _product_code, float _price,
-		int _invoice_no, int _quantity, string _seller_name, string _invoice_date)
-		: sales(_product_name, _product_code, _price, _invoice_no, _quantity),
-		seller_name(_seller_name), invoice_date(_invoice_date) {}
+	invoice(char _product_name[], int _product_code, float _price,
+		int _invoice_no, int _quantity, char _seller_name[], char _invoice_date[])
+		: sales(_product_name, _product_code, _price, _invoice_no, _quantity) {
+		strcpy_s(seller_name, _seller_name);
+		strcpy_s(invoice_date, _invoice_date);
+	}
 
 	static void display() {
 		if (invoices.empty()) {
