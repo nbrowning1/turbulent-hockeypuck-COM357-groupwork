@@ -1,5 +1,7 @@
 #include "invoice.h"
 #include <conio.h>
+#include <iostream>
+#include <Windows.h>
 
 vector<invoice*> invoice::invoices;
 
@@ -7,6 +9,8 @@ void displayMenu();
 float invoice::grand_total_price = 0;
 
 void main() {
+	SetConsoleOutputCP(1252);
+	SetConsoleCP(1252);
 	displayMenu();
 }
 
@@ -42,7 +46,7 @@ void displayMenu() {
 			break;
 		case 'T':
 		case 't': 
-			cout << "Total price: " << to_string(invoice::getTotalPrice()) << endl;
+			cout << "Total price: £" << to_string(invoice::getTotalPrice()) << endl;
 			break;
 		case 'Q':
 		case 'q':

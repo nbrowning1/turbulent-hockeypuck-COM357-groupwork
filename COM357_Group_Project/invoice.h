@@ -32,7 +32,12 @@ class invoice :private sales {
 		do {
 			cout << "Enter " << valName << ": ";
 			cin >> val;
-			if (validSize(val, max_size)) {
+			if (!cin) {
+				cin.clear();
+				cin.ignore(numeric_limits<streamsize>::max(), '\n');
+				cout << "Invalid entry data" << endl;
+			}
+			else if (validSize(val, max_size)) {
 				return val;
 			}
 			else {
@@ -42,7 +47,7 @@ class invoice :private sales {
 	}
 
 	static int getValidIntInput(string valName, int max_size) {
-		return getValidInput(valName, (float)max_size);
+		return (int)getValidInput(valName, (float)max_size);
 	}
 
 	static bool validLength(string val, int max_length) {
@@ -71,9 +76,9 @@ public:
 	invoice() {
 		product_name = getValidInput("product name", 30);
 		product_code = getValidIntInput("product code", MAX_INT);
-		product_code = getValidInput("product price", 1000.0f);
-		product_code = getValidIntInput("invoice no.", MAX_INT);
-		product_code = getValidIntInput("quantity sold", 100);
+		price = getValidInput("product price", 1000.0f);
+		invoice_no = getValidIntInput("invoice no.", MAX_INT);
+		quantity = getValidIntInput("quantity sold", 100);
 		seller_name = getValidInput("seller name", 15);
 		invoice_date = getValidInput("invoice date", 10);
 
