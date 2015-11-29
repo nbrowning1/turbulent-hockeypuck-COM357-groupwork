@@ -11,7 +11,7 @@ protected:
 public:
 	sales() {}
 
-	sales(char _product_name[], int _product_code, float _price,
+	sales(string _product_name, int _product_code, float _price,
 		int _invoice_no, int _quantity)
 		: product(_product_name, _product_code, _price),
 		invoice_no(_invoice_no), quantity(_quantity) {
