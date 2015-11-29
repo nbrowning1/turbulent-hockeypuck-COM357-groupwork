@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <sstream>
 #include "sales.h"
 
 class invoice :private sales {
@@ -13,7 +14,7 @@ class invoice :private sales {
 
 	static const int MAX_INT = numeric_limits<int>::max();
 
-	static string getValidInput(string valName, int max_length) {
+	static string getValidTextInput(string valName, int max_length) {
 		string val;
 		do {
 			cout << "Enter " << valName << ": ";
@@ -27,28 +28,46 @@ class invoice :private sales {
 		} while (true);
 	}
 
-	static float getValidInput(string valName, float max_size) {
+	static bool containsDecimal(float val) {
+		if (val != (int)val) {
+			return true;
+		}
+		return false;
+	}
+
+	static float getValidNumericInput(string valName, float max_size, bool only_whole_numbers) {
 		float val;
 		do {
 			cout << "Enter " << valName << ": ";
 			cin >> val;
+
+			// validate that input is number
 			if (!cin) {
 				// clear cin buffer so rest of input is ignored
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
-				cout << "Invalid entry data" << endl;
+				cout << "Invalid entry data - not a number" << endl;
 			}
-			else if (validSize(val, max_size)) {
-				return val;
+			// validate that input is whole number if applicable
+			else if (only_whole_numbers && containsDecimal(val)) {
+				cout << "Invalid entry data - not a whole number" << endl;
+			}
+			// validate that input isn't too large
+			else if (!validSize(val, max_size)) {
+				cout << "Invalid entry data - too large" << endl;
 			}
 			else {
-				cout << "Invalid entry size" << endl;
+				return val;
 			}
 		} while (true);
 	}
 
+	static int getValidFloatInput(string valName, float max_size) {
+		return getValidNumericInput(valName, max_size, false);
+	}
+
 	static int getValidIntInput(string valName, int max_size) {
-		return (int)getValidInput(valName, (float)max_size);
+		return (int)getValidNumericInput(valName, (float)max_size, true);
 	}
 
 	static bool validLength(string val, int max_length) {
@@ -73,13 +92,13 @@ class invoice :private sales {
 public:
 
 	invoice() {
-		product_name = getValidInput("product name", 30);
+		product_name = getValidTextInput("product name", 30);
 		product_code = getValidIntInput("product code", MAX_INT);
-		price = getValidInput("product price", 1000.0f);
+		price = getValidFloatInput("product price", 1000.0f);
 		invoice_no = getValidIntInput("invoice no.", MAX_INT);
 		quantity = getValidIntInput("quantity sold", 100);
-		seller_name = getValidInput("seller name", 15);
-		invoice_date = getValidInput("invoice date", 10);
+		seller_name = getValidTextInput("seller name", 15);
+		invoice_date = getValidTextInput("invoice date", 10);
 
 		total_price = price * quantity;
 		grand_total_price += total_price;
@@ -92,6 +111,7 @@ public:
 		seller_name(_seller_name), invoice_date(_invoice_date) {}
 
 	static void display() {
+
 		if (invoices.empty()) {
 			cout << "No invoices added" << endl;
 		}
