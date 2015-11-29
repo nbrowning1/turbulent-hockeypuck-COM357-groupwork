@@ -46,7 +46,7 @@ void displayMenu() {
 			break;
 		case 'T':
 		case 't': 
-			cout << "Total price: £" << to_string(invoice::getTotalPrice()) << endl;
+			invoice::printTotalPrice();
 			break;
 		case 'Q':
 		case 'q':

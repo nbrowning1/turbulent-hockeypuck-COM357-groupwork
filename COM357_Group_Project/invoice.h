@@ -33,6 +33,7 @@ class invoice :private sales {
 			cout << "Enter " << valName << ": ";
 			cin >> val;
 			if (!cin) {
+				// clear cin buffer so rest of input is ignored
 				cin.clear();
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				cout << "Invalid entry data" << endl;
@@ -59,16 +60,14 @@ class invoice :private sales {
 	}
 
 	void displayInvoice() {
-		cout << endl;
-		cout << "'" << seller_name << "' company's invoice - Invoice no. " << invoice_no << endl;
-		cout << "Date: " << invoice_date << endl;
 		cout << "--------------------------------" << endl;
-		cout << "Product name: " << product_name << endl;
-		cout << "Product code: " << product_code << endl;
+		cout << "'" << seller_name << "' company's invoice -- Invoice no. " << invoice_no << endl;
+		cout << "Date:          | " << invoice_date << endl;
+		cout << "Product name:  | " << product_name << endl;
+		cout << "Product code:  | " << product_code << endl;
 		cout << "Quantity (" << quantity << ") at price £" << to_string(price) << endl;
+		cout << "-> £" << to_string(total_price) << endl;
 		cout << "--------------------------------" << endl;
-		cout << "Total price: £" << to_string(total_price) << endl;
-		cout << "--------------------------------" << endl << endl;
 	}
 
 public:
@@ -100,10 +99,13 @@ public:
 			for (invoice* inv : invoices) {
 				inv->displayInvoice();
 			}
+			printTotalPrice();
 		}
 	}
 
-	static float getTotalPrice() {
-		return grand_total_price;
+	static void printTotalPrice() {
+		cout << "--------------------------------" << endl;
+		cout << "Total price: £" << to_string(grand_total_price) << endl;
+		cout << "--------------------------------" << endl;
 	}
 };
