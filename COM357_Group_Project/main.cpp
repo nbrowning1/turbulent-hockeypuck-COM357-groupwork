@@ -7,7 +7,12 @@ vector<invoice*> invoice::invoices;
 
 void displayMenu();
 float invoice::grand_total_price = 0;
+const string invoice::VALID_DATE_REGEX = "^(([1-9]|0[1-9]|1[0-9]|2[0-9]|3[0-1])\/([1-9]|0[1-9]|1[0-2])\/(200[0-9]|201[0-5]))$";
 
+// TODO: 
+	// 1) Fix price output so only 2d.p.
+	// 2) Validation for negative numbers
+	// 3) Validation for spaces in input / accept whole line input
 void main() {
 	SetConsoleOutputCP(1252);
 	SetConsoleCP(1252);

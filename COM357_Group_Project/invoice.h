@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <limits>
-#include <sstream>
+#include <regex>
 #include "sales.h"
 
 class invoice :private sales {
@@ -13,6 +13,7 @@ class invoice :private sales {
 	static vector<invoice*> invoices;
 
 	static const int MAX_INT = numeric_limits<int>::max();
+	static const string VALID_DATE_REGEX;
 
 	static string getValidTextInput(string valName, int max_length) {
 		string val;
@@ -48,13 +49,13 @@ class invoice :private sales {
 				cin.ignore(numeric_limits<streamsize>::max(), '\n');
 				cout << "Invalid entry data - not a number" << endl;
 			}
-			// validate that input is whole number if applicable
-			else if (only_whole_numbers && containsDecimal(val)) {
-				cout << "Invalid entry data - not a whole number" << endl;
-			}
 			// validate that input isn't too large
 			else if (!validSize(val, max_size)) {
 				cout << "Invalid entry data - too large" << endl;
+			}
+			// validate that input is whole number if applicable
+			else if (only_whole_numbers && containsDecimal(val)) {
+				cout << "Invalid entry data - not a whole number" << endl;
 			}
 			else {
 				return val;
@@ -68,6 +69,20 @@ class invoice :private sales {
 
 	static int getValidIntInput(string valName, int max_size) {
 		return (int)getValidNumericInput(valName, (float)max_size, true);
+	}
+
+	static string getValidDateInput(string valName) {
+		string val;
+		do {
+			cout << "Enter " << valName << ": ";
+			cin >> val;
+			if (regex_match(val, regex(VALID_DATE_REGEX))) {
+				return val;
+			}
+			else {
+				cout << "Invalid date" << endl;
+			}
+		} while (true);
 	}
 
 	static bool validLength(string val, int max_length) {
@@ -98,7 +113,7 @@ public:
 		invoice_no = getValidIntInput("invoice no.", MAX_INT);
 		quantity = getValidIntInput("quantity sold", 100);
 		seller_name = getValidTextInput("seller name", 15);
-		invoice_date = getValidTextInput("invoice date", 10);
+		invoice_date = getValidDateInput("invoice date");
 
 		total_price = price * quantity;
 		grand_total_price += total_price;
