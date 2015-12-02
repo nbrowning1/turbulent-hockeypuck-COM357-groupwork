@@ -1,4 +1,3 @@
-#pragma once
 #include "product.h"
 
 class sales :protected product {
