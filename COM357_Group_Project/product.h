@@ -2,22 +2,28 @@
 #include <string>
 using namespace std;
 
-class product {
-
+class product
+{
 protected:
+
 	char product_name[30];
 	int product_code;
-	float price;
+	double price;
 
-public:
-	product() {}
+	product::product(char pproduct_name[30], int pproduct_code, double pprice){
 
-	product(char _product_name[], int _product_code, float _price) 
-		: product_code(_product_code), price(_price) {
-		strcpy_s(product_name, _product_name);
+		strcpy_s(product_name, pproduct_name);
+		product_code = pproduct_code;
+		price = pprice;
 	}
 
-	void display() {
-		cout << "Price of " << product_name << ": £" << price;
+	product::product(){
 	}
+
+	void display(){
+		cout << "Product name: " << product_name << endl;
+		cout << "Product price: " << price << endl;
+		cout << "Product code: " << product_code << endl;
+	}
+
 };

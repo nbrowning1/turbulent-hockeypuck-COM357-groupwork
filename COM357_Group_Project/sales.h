@@ -1,20 +1,23 @@
+#include <iostream>
 #include "product.h"
 
 class sales :protected product {
-
 protected:
 	int invoice_no;
 	int quantity;
-	float total_price;
-
+	double total_price;
 public:
-	sales() {}
+	sales(){}
 
-	sales(char _product_name[], int _product_code, float _price,
-		int _invoice_no, int _quantity)
-		: product(_product_name, _product_code, _price),
-		invoice_no(_invoice_no), quantity(_quantity) {
-
-		total_price = _price * _quantity;
+	sales(char pProduct_name[], int pProduct_code, double pPrice, int pInvoice,
+		int pQuantity)
+	{
+		strcpy_s(product_name, pProduct_name);
+		product_code = pProduct_code;
+		price = pPrice;
+		invoice_no = pInvoice;
+		quantity = pQuantity;
+		total_price = price*quantity;
 	}
+
 };

@@ -5,7 +5,7 @@
 class invoice :private sales {
 	char seller_name[20];
 	char invoice_date[10];
-	static float grand_total_price;
+	static double grand_total_price;
 
 	static vector<invoice*> invoices;
 
@@ -46,7 +46,7 @@ public:
 		invoices.push_back(this);
 	}
 
-	invoice(char _product_name[], int _product_code, float _price,
+	invoice(char _product_name[], int _product_code, double _price,
 		int _invoice_no, int _quantity, char _seller_name[], char _invoice_date[])
 		: sales(_product_name, _product_code, _price, _invoice_no, _quantity) {
 		strcpy_s(seller_name, _seller_name);
@@ -64,7 +64,7 @@ public:
 		}
 	}
 
-	static float getTotalPrice() {
+	static double getTotalPrice() {
 		return grand_total_price;
 	}
 };
